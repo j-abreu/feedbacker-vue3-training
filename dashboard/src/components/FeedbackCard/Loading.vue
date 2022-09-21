@@ -29,8 +29,9 @@
 
 <script>
 import ContentLoader from '../ContentLoader'
-
 export default {
-  components: { ContentLoader }
+  components: {
+    ContentLoader
+  }
 }
 </script>

@@ -8,7 +8,7 @@
       Feedbacks
     </h1>
     <p class="text-lg text-center text-gray-800 font-regular">
-      Detalhes de todos os feedbacks recebidos.
+      Manage your feedbacks
     </p>
   </div>
 
@@ -16,31 +16,33 @@
     <div class="w-4/5 max-w-6xl py-10 grid grid-cols-4 gap-2">
       <div>
         <h1 class="text-3xl font-black text-brand-darkgray">
-          Listagem
+          Listing
         </h1>
         <suspense>
           <template #default>
             <filters
-              @select="changeFeedbacksType"
-              class="mt-8 animate__animated animate__fadeIn animate__faster"
+            @select="handleSelectType"
+              class="mt-8 animate__animated animate__fadeIn animate_faster"
             />
           </template>
           <template #fallback>
             <filters-loading class="mt-8" />
           </template>
         </suspense>
-
       </div>
+
       <div class="px-10 pt-20 col-span-3">
         <p
           v-if="state.hasError"
-          class="text-lg text-center text-gray-800 font-regular">
-          Aconteceu um erro ao carregar os feedbacks 🥺
+          class="text-lg text-center text-gray-800 font-regular"
+        >
+          Something went wrong during feedbacks loading
         </p>
         <p
           v-if="!state.feedbacks.length && !state.isLoading && !state.isLoadingFeedbacks && !state.hasError"
-          class="text-lg text-center text-gray-800 font-regular">
-          Ainda nenhum feedback recebido 🤓
+          class="text-lg text-center text-gray-800 font-regular"
+        >
+          You have no feedback so far!
         </p>
 
         <feedback-card-loading v-if="state.isLoading || state.isLoadingFeedbacks" />
@@ -60,9 +62,9 @@
 
 <script>
 import { reactive, onMounted, onUnmounted, onErrorCaptured } from 'vue'
+import HeaderLogged from '../../components/HeaderLogged'
 import Filters from './Filters'
 import FiltersLoading from './FiltersLoading'
-import HeaderLogged from '../../components/HeaderLogged'
 import FeedbackCard from '../../components/FeedbackCard'
 import FeedbackCardLoading from '../../components/FeedbackCard/Loading'
 import services from '../../services'
@@ -90,10 +92,14 @@ export default {
       hasError: false
     })
 
-    onErrorCaptured(handleErrors)
+    onErrorCaptured((e) => {
+      console.log('here', e)
+      handleErrors(e)
+    })
 
     onMounted(() => {
       fetchFeedbacks()
+
       window.addEventListener('scroll', handleScroll, false)
     })
 
@@ -101,17 +107,9 @@ export default {
       window.removeEventListener('scroll', handleScroll, false)
     })
 
-    function handleErrors (error) {
-      state.isLoading = false
-      state.isLoadingFeedbacks = false
-      state.isLoadingMoreFeedback = false
-      state.hasError = !!error
-    }
-
     async function handleScroll () {
       const isBottomOfWindow = Math.ceil(
-        document.documentElement.scrollTop + window.innerHeight
-      ) >= document.documentElement.scrollHeight
+        document.documentElement.scrollTop + window.innerHeight) >= document.documentElement.scrollHeight
 
       if (state.isLoading || state.isLoadingMoreFeedbacks) return
       if (!isBottomOfWindow) return
@@ -137,12 +135,40 @@ export default {
       }
     }
 
-    async function changeFeedbacksType (type) {
+    function handleErrors (error) {
+      console.log('here')
+      state.hasError = !!error
+    }
+
+    async function fetchFeedbacks () {
+      try {
+        console.log('fetching')
+        state.isLoading = true
+        const { data } = await services.feedbacks.getAll({
+          ...state.pagination,
+          type: state.currentFeedbackType
+        })
+        console.log('fetched')
+
+        state.feedbacks = data.results
+        state.pagination = data.pagination
+        state.isLoading = false
+      } catch (error) {
+        console.log('error')
+        state.isLoading = false
+        handleErrors(error)
+      }
+    }
+
+    async function handleSelectType (type) {
       try {
         state.isLoadingFeedbacks = true
-        state.pagination.offset = 0
-        state.pagination.limit = 5
         state.currentFeedbackType = type
+        state.pagination = {
+          limit: 5,
+          offset: 0
+        }
+
         const { data } = await services.feedbacks.getAll({
           type,
           ...state.pagination
@@ -156,25 +182,9 @@ export default {
       }
     }
 
-    async function fetchFeedbacks () {
-      try {
-        state.isLoading = true
-        const { data } = await services.feedbacks.getAll({
-          ...state.pagination,
-          type: state.currentFeedbackType
-        })
-
-        state.feedbacks = data.results
-        state.pagination = data.pagination
-        state.isLoading = false
-      } catch (error) {
-        handleErrors(error)
-      }
-    }
-
     return {
       state,
-      changeFeedbacksType
+      handleSelectType
     }
   }
 }

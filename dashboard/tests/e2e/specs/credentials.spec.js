@@ -1,6 +1,6 @@
 const APP_URL = process.env.APP_URL || 'http://localhost:8080'
 
-describe('Credencials', () => {
+describe('Credentials', () => {
   it('should generate an api_key', () => {
     cy.visit(APP_URL)
 
@@ -12,7 +12,8 @@ describe('Credencials', () => {
     cy.get('#submit-button').click()
 
     cy.wait(4000)
-    cy.visit(`${APP_URL}/credencials`)
+    cy.url().should('include', '/feedbacks')
+    cy.get('#header-credentials-button').click()
     cy.wait(2000)
 
     const oldApikey = cy.get('#apikey').invoke('text')

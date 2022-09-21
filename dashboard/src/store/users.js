@@ -6,13 +6,11 @@ const userInitialState = {
 
 let state = reactive(userInitialState)
 
-export default state
-
 export function resetUserStore () {
   state = reactive(userInitialState)
 }
 
-export function cleanCurrentUser () {
+export function clearCurrentUser () {
   state.currentUser = {}
 }
 
@@ -24,3 +22,5 @@ export function setApiKey (apiKey) {
   const currentUser = { ...state.currentUser, apiKey }
   state.currentUser = currentUser
 }
+
+export default state

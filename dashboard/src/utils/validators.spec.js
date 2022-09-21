@@ -4,27 +4,27 @@ import {
 } from './validators'
 
 describe('Validators utils', () => {
-  it('should give an error with empty payload', () => {
-    expect(validateEmptyAndLength3()).toBe('*Este campo é obrigatório')
+  it('should inform that field is required', () => {
+    expect(validateEmptyAndLength3()).toBe('*Required field')
   })
 
-  it('should give an error with less then 3 character payload', () => {
-    expect(validateEmptyAndLength3('12')).toBe('*Este campo precisa de no mínimo 3 caracteres')
+  it('should inform that value must be at least 3 characters long', () => {
+    expect(validateEmptyAndLength3('ab')).toBe[('*Use at least 3 characters')]
   })
 
-  it('should returns true when pass a correct param', () => {
-    expect(validateEmptyAndLength3('1234')).toBe(true)
+  it('should return true when value length is greater than or equal to 3', () => {
+    expect(validateEmptyAndLength3('name')).toBe(true)
   })
 
-  it('should give an error with empty payload', () => {
-    expect(validateEmptyAndEmail()).toBe('*Este campo é obrigatório')
+  it('should inform required field on empty payload', () => {
+    expect(validateEmptyAndEmail()).toBe('*Required field')
   })
 
-  it('should give an error with a invalid param', () => {
-    expect(validateEmptyAndEmail('myemail@')).toBe('*Este campo precisa ser um e-mail')
+  it('should inform that email is invalid if the value does\'t match the regex', () => {
+    expect(validateEmptyAndEmail('jeremias')).toBe('*Invalid email')
   })
 
-  it('should returns true when pass a correct param', () => {
-    expect(validateEmptyAndEmail('igor@igor.me')).toBe(true)
+  it('should return true if the email matches the regex', () => {
+    expect(validateEmptyAndEmail('jeremias@email.com')).toBe(true)
   })
 })

@@ -1,7 +1,7 @@
 const APP_URL = process.env.APP_URL || 'http://localhost:8080'
 
 describe('Home', () => {
-  it('should render create account modal when click on cta create account button', () => {
+  it('should render create account modal when click on cta create account', () => {
     cy.visit(APP_URL)
 
     cy.get('#cta-create-account-button').click()
@@ -9,7 +9,7 @@ describe('Home', () => {
     cy.get('#modal-create-account')
   })
 
-  it('should render create account modal when click on header create account button', () => {
+  it('should render create account modal when click on the header create account button', () => {
     cy.visit(APP_URL)
 
     cy.get('#header-create-account-button').click()
@@ -17,7 +17,7 @@ describe('Home', () => {
     cy.get('#modal-create-account')
   })
 
-  it('should render login modal when click on header login button', () => {
+  it('should render login modal when click on the header login button', () => {
     cy.visit(APP_URL)
 
     cy.get('#header-login-button').click()
@@ -25,7 +25,7 @@ describe('Home', () => {
     cy.get('#modal-login')
   })
 
-  it('should login with an email and password', () => {
+  it('should log in with an email and password', () => {
     cy.visit(APP_URL)
 
     cy.get('#header-login-button').click()
@@ -38,20 +38,20 @@ describe('Home', () => {
     cy.url().should('include', '/feedbacks')
   })
 
-  it('should show an error with an invalid email', () => {
+  it('should show an error when email is invalid', () => {
     cy.visit(APP_URL)
 
     cy.get('#header-login-button').click()
     cy.get('#modal-login')
 
-    cy.get('#email-field').type('igor@')
+    cy.get('#email-field').type('jeremias@')
     cy.get('#password-field').type('1234')
     cy.get('#submit-button').click()
 
     cy.get('#email-error')
   })
 
-  it('should logout work correctly', () => {
+  it('should log out correctly', () => {
     cy.visit(APP_URL)
 
     cy.get('#header-login-button').click()
@@ -64,5 +64,7 @@ describe('Home', () => {
     cy.url().should('include', '/feedbacks')
     cy.get('#logout-button').click()
     cy.url().should('include', '/')
+    cy.get('#header-login-button')
+    cy.get('#header-create-account-button')
   })
 })

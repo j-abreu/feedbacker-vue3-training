@@ -1,8 +1,7 @@
 import Home from '.'
-import { shallowMount } from '@vue/test-utils'
 import { routes } from '../../router'
-
 import { createRouter, createWebHistory } from 'vue-router'
+import { shallowMount } from '@vue/test-utils'
 
 const router = createRouter({
   history: createWebHistory('/'),
@@ -10,7 +9,7 @@ const router = createRouter({
 })
 
 describe('<Home />', () => {
-  it('should render home correctly', async () => {
+  it('should be render home', async () => {
     router.push('/')
     await router.isReady()
     const wrapper = shallowMount(Home, {
@@ -21,4 +20,5 @@ describe('<Home />', () => {
 
     expect(wrapper.html()).toMatchSnapshot()
   })
+
 })

@@ -6,7 +6,12 @@
     }"
     class="opacity-75 content-loader"
   >
-    <span :style="{ animationDuration }" class="content-loader--fx"/>
+    <span
+      :style="{
+        animationDuration
+      }"
+      class="content-loader--fx"
+    />
     <slot />
   </div>
 </template>
@@ -25,8 +30,8 @@ export default {
       type: Number
     },
     animationDuration: {
-      type: String,
-      default: '1.6s'
+      default: '1.6s',
+      type: String
     },
     height: {
       default: '1rem',
@@ -39,38 +44,41 @@ export default {
   },
   setup (props) {
     const computedWidth = computed(() => {
-      const value = Math.random() * (props.width - props.minWidth)
-      return props.width ?? `${Math.floor(value + props.minWidth)}%`
+      const widthDiff = Math.random * (props.width - props.minWidth)
+      return props.width ?? `${Math.floor(widthDiff + props.minWidth)}%`
     })
 
-    return { computedWidth }
+    return {
+      computedWidth
+    }
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
   }
-}
 
-.content-loader {
-  position: relative;
-  vertical-align: middle;
-  overflow: hidden;
-  background: #f6f7f8;
-}
-.content-loader--fx {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform: translateX(-100%);
-  background-image: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-  background-position: 0 0;
-  background-size: 1000 100;
-  animation: shimmer infinite alternate ease-in-out;
-}
+  .content-loader {
+    position: relative;
+    vertical-align: middle;
+    overflow: hidden;
+    background: #f6f7f8;
+  }
+
+  .content-loader--fx {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 74%);
+    background-position: 0 0;
+    background-size: 1000 100;
+    animation: shimmer infinite alternate ease-in-out;
+  }
 </style>

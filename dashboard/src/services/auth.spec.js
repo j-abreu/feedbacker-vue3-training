@@ -8,13 +8,13 @@ describe('AuthService', () => {
     jest.clearAllMocks()
   })
 
-  it('should return a token when user login', async () => {
-    const token = '123.123.123'
+  it('should return a token when user log in', async () => {
+    const token = '123.123.123.123'
     mockAxios.post.mockImplementationOnce(() => {
       return Promise.resolve({ data: { token } })
     })
 
-    const response = await AuthService(mockAxios).login({ email: 'igor@igor.me', password: '123' })
+    const response = await AuthService(mockAxios).login({ email: 'igor@igor.me', passowrd: '1234' })
     expect(response.data).toHaveProperty('token')
     expect(response).toMatchSnapshot()
   })
@@ -25,6 +25,7 @@ describe('AuthService', () => {
       password: '123',
       email: 'igor@igor.me'
     }
+
     mockAxios.post.mockImplementationOnce(() => {
       return Promise.resolve({ data: user })
     })
@@ -36,13 +37,13 @@ describe('AuthService', () => {
     expect(response).toMatchSnapshot()
   })
 
-  it('should throw an error when not found', async () => {
+  it('should throw an error when there\'s no network', async () => {
     const errors = { status: 404, statusText: 'Not Found' }
     mockAxios.post.mockImplementationOnce(() => {
       return Promise.resolve({ request: errors })
     })
 
-    const response = await AuthService(mockAxios).login({ email: 'igor@igor.me', password: '123' })
+    const response = await AuthService(mockAxios).login({ email: 'igor@igor.me', password: '1234' })
     expect(response.errors).toHaveProperty('status')
     expect(response.errors).toHaveProperty('statusText')
   })

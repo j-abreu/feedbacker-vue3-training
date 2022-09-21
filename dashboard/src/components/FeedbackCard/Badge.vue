@@ -1,13 +1,15 @@
 <template>
   <span
     :class="`bg-${classColor}`"
-    class="p-2 text-xs font-black text-white uppercase rounded-full">
+    class="p-2 text-xs font-black text-white uppercase rounded-full"
+  >
     {{ label }}
   </span>
 </template>
 
 <script>
 import { computed } from 'vue'
+
 export default {
   props: {
     type: { type: String, required: true }
@@ -15,14 +17,14 @@ export default {
   setup (props) {
     const label = computed(() => {
       if (props.type === 'ISSUE') {
-        return 'problema'
+        return 'Problem'
       }
 
       if (props.type === 'IDEA') {
-        return 'ideia'
+        return 'Idea'
       }
 
-      return 'outros'
+      return 'Other'
     })
 
     const classColor = computed(() => {
