@@ -7,7 +7,7 @@ import { setGlobalLoading } from '../store/global'
 
 const API_ENVS = {
   production: 'https://backend-vue3-training-nine.vercel.app/',
-  development: '',
+  development: 'http://localhost:3000',
   local: 'http://localhost:3000'
 }
 
