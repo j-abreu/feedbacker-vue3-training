@@ -1,5 +1,5 @@
 <template>
-  <div class='flex justify-content w-full'>
+  <div class='flex justify-center w-full'>
     <div class='flex flex-col items-center w-4/5 max-w-6xl m-16'>
         <h1 class='text-4xl text-black text-center text-gray-800'>
             Alguma dúvida?

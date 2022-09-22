@@ -4,8 +4,8 @@
       @login='handleLogin'
    />
     <contact />
-    <div class='flex justify-content py-10 bg-brand-gray'>
-        <p class='font-medium text-center text-gray-800'>Feedbacker &copy; 2022</p>
+    <div class='flex justify-center py-10 bg-brand-gray'>
+        <p class='font-medium text-center text-gray-800'>Feedbacker by <a class="text-brand-main" href="https://github.com/jabreu">jabreu</a> &copy; 2022</p>
     </div>
 </template>
 
