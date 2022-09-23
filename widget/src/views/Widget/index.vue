@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import Standby from './Standby.vue'
-// import Box from './Box.vue'
+import Box from './Box.vue'
 
 type State = {
   component: string
@@ -25,8 +25,8 @@ interface SetupReturn {
 
 export default defineComponent({
   components: {
-    Standby
-    // Box
+    Standby,
+    Box
   },
   setup(): SetupReturn {
     const state = reactive<State>({
@@ -35,6 +35,7 @@ export default defineComponent({
 
     function handleOpenBox(): void {
       state.component = 'Box'
+      console.log('ok', state.component)
     }
 
     function handleCloseBox(): void {

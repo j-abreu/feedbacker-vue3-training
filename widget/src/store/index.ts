@@ -1,8 +1,9 @@
 import { reactive, readonly } from 'vue'
+import { FeedbackType } from '@/utils/enums'
 
 export type StoreState = {
   currentComponent: string
-  feedbackType: string
+  feedbackType: FeedbackType
   message: string
   fingerprint: string
   apiKey: string
@@ -11,7 +12,7 @@ export type StoreState = {
 
 const initialState = {
   currentComponent: 'SelectFeedbackType',
-  feedbackType: '',
+  feedbackType: FeedbackType.None,
   message: '',
   fingerprint: '',
   apiKey: '',
@@ -24,7 +25,7 @@ export function setCurrentComponent(component: string): void {
   state.currentComponent = component
 }
 
-export function setFeedbackType(feedbackType: string): void {
+export function setFeedbackType(feedbackType: FeedbackType): void {
   state.feedbackType = feedbackType
 }
 
