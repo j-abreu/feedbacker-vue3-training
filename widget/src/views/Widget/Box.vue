@@ -2,23 +2,26 @@
   <div class="box animate__animated animate__fadeInUp animate__faster">
     <div class="relative w-full flex justify-between">
       <button
-        @click="() => {}"
+        @click="back"
+        :class="{
+          invisible: !canGoBack
+        }"
         class="text-xl text-gray-800 focus:outline-none"
       >
-        <icon name="arrow-right" :color="brandColors.graydark" />
+        <icon name="arrow-left" :color="brandColors.graydark" />
       </button>
 
       <p class="text-xl font-black text-center text-brand-main">{{ label }}</p>
 
       <div
         @click="() => emit('close-box')"
-        class="text-xl text-gray-800 focus:outline-none cursor-pointer"
+        class="flex items-center text-xl text-gray-800 focus:outline-none cursor-pointer"
       >
         <icon name="close" :color="brandColors.graydark" />
       </div>
     </div>
 
-    <div>Wizard</div>
+    <widget />
 
     <div class="text-gray-800 text-sm flex">
       <icon name="chat" class="mr-1" :color="brandColors.graydark" />
@@ -29,9 +32,12 @@
 
 <script lang="ts">
 import useStore from '../../hooks/store'
+import useNavigation from '@/hooks/navigation'
 import { defineComponent, SetupContext, computed, ComputedRef } from 'vue'
 import { FeedbackType } from '@/utils/enums'
 import Icon from '../../components/Icon/index.vue'
+import Widget from '../../components/Wizard/index.vue'
+import { setCurrentComponent } from '@/store'
 const { brand } = require('../../../palette.js')
 
 interface SetupReturn {
@@ -39,14 +45,18 @@ interface SetupReturn {
   label: ComputedRef<string>
   canGoBack: ComputedRef<boolean>
   brandColors: Record<string, string>
+  handleGoBack(): void
+  back(): void
 }
 
 export default defineComponent({
   components: {
-    Icon
+    Icon,
+    Widget
   },
   setup(_, { emit }: SetupContext): SetupReturn {
     const store = useStore()
+    const { back } = useNavigation()
 
     const label = computed<string>(() => {
       if (store.feedbackType === FeedbackType.Issue) {
@@ -65,11 +75,18 @@ export default defineComponent({
     })
 
     const canGoBack = computed<boolean>(() => {
-      return store.currentComponent === 'SelectFeedbackType'
+      return store.currentComponent === 'WriteAFeedback'
     })
+
+    function handleGoBack(): void {
+      console.log('here')
+      setCurrentComponent('SelectFeedbackType')
+    }
 
     return {
       emit,
+      handleGoBack,
+      back,
       label,
       canGoBack,
       brandColors: brand

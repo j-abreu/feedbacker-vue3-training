@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ArrowRight from './ArrowRight.vue'
+import ArrowLeft from './ArrowLeft.vue'
 import Chat from './Chat.vue'
 import ChevronDown from './ChevronDown.vue'
 import Close from './Close.vue'
@@ -13,7 +13,7 @@ import Loading from './Loading.vue'
 
 export default defineComponent({
   components: {
-    ArrowRight,
+    ArrowLeft,
     Chat,
     ChevronDown,
     Close,
