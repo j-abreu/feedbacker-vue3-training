@@ -12,6 +12,7 @@
 import { defineComponent, reactive } from 'vue'
 import Standby from './Standby.vue'
 import Box from './Box.vue'
+import { setCurrentComponent } from '@/store'
 
 type State = {
   component: string
@@ -40,6 +41,7 @@ export default defineComponent({
 
     function handleCloseBox(): void {
       state.component = 'Standby'
+      setCurrentComponent('SelectFeedbackType')
     }
 
     return {

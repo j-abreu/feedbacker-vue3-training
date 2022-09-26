@@ -45,7 +45,7 @@ export function setFingerprint(fingerprint: string): void {
   state.fingerprint = fingerprint
 }
 
-export function restoreState(): void {
+export function resetStore(): void {
   setCurrentComponent(initialState.currentComponent)
   setFeedbackType(initialState.feedbackType)
   setMessage(initialState.message)

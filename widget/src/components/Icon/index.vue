@@ -9,7 +9,9 @@ import Chat from './Chat.vue'
 import ChevronDown from './ChevronDown.vue'
 import Close from './Close.vue'
 import Copy from './Copy.vue'
+import Error from './Error.vue'
 import Loading from './Loading.vue'
+import Success from './Success.vue'
 
 export default defineComponent({
   components: {
@@ -18,7 +20,9 @@ export default defineComponent({
     ChevronDown,
     Close,
     Copy,
-    Loading
+    Error,
+    Loading,
+    Success
   },
   props: {
     name: { type: String, required: true }

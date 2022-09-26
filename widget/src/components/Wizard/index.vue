@@ -12,7 +12,7 @@ import { defineComponent } from 'vue'
 import useStore from '../../hooks/store'
 import { FeedbackType } from '@/utils/enums'
 import { StoreState, setFeedbackType } from '../../store'
-import Error from './Error.vue'
+import ErrorState from './Error.vue'
 import Success from './Success.vue'
 import SelectFeedbackType from './SelectFeedbackType.vue'
 import WriteAFeedback from './WriteAFeedback.vue'
@@ -25,7 +25,7 @@ interface SetupReturn {
 
 export default defineComponent({
   components: {
-    Error,
+    Error: ErrorState,
     SelectFeedbackType,
     Success,
     WriteAFeedback

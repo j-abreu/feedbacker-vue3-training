@@ -5,6 +5,8 @@ import { FeedbackType } from '@/utils/enums'
 interface Navigation {
   back(): void
   next(): void
+  setErrorState(): void
+  setSuccessState(): void
 }
 
 export default function useNavigation(): Navigation {
@@ -23,8 +25,18 @@ export default function useNavigation(): Navigation {
     }
   }
 
+  function setErrorState(): void {
+    setCurrentComponent('Error')
+  }
+
+  function setSuccessState(): void {
+    setCurrentComponent('Success')
+  }
+
   return {
     back,
-    next
+    next,
+    setErrorState,
+    setSuccessState
   }
 }

@@ -3,7 +3,6 @@
     :width="size"
     :height="size"
     viewBox="0 0 13 5"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -13,11 +12,13 @@
   </svg>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   props: {
     size: { type: [String, Number], default: 22 },
     color: { type: String, default: 'white' }
   }
-}
+})
 </script>
