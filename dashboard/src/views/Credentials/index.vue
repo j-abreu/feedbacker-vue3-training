@@ -31,18 +31,13 @@
         v-else
         class="flex py-3 pl-5 pr-5 mt-2 rouded items-center justify-between bg-brand-gray w-full lg:1/2"
       >
-        <span
-          v-if="state.hasError"
-        >
+        <span v-if="state.hasError">
           Cannot load api key
         </span>
         <span id="apikey" v-else>
           {{ store.User.currentUser.apiKey }}
         </span>
-        <div
-          v-if="!state.hasError"
-          class="flex ml-20 mr-1"
-        >
+        <div v-if="!state.hasError" class="flex ml-20 mr-1">
           <icon
             name="copy"
             @click="handleCopy"
@@ -74,12 +69,17 @@
         v-else
         class="py-3 pl-5 pr-20 mt-2 w-2/3 overflow-x-scroll rounded bg-brand-gray w-full lg:1/2"
       >
-        <span
-          v-if="state.hasError"
-        >
+        <span v-if="state.hasError">
           Cannot load script
         </span>
-        <pre v-else>&lt;script src="http://jabreu-feedbacker-widget.netlify.app?api_key={{ store.User.currentUser.apiKey }}"&gt;&lt;/script&gt;</pre>
+        <pre v-else>
+&lt;script
+  defer
+  async
+  onload="init('{{ store.User.currentUser.apiKey }}')"
+  src="https://jabreu-feedbacker-widget.netlify.app/init.js"
+&gt;&lt;/script&gt;
+        </pre>
       </div>
     </div>
   </div>
@@ -102,7 +102,7 @@ export default {
     Icon,
     ContentLoader
   },
-  setup () {
+  setup() {
     const store = useStore()
     const toast = useToast()
     const state = reactive({
@@ -110,19 +110,22 @@ export default {
       hasError: false
     })
 
-    watch(() => store.User.currentUser, () => {
-      if (!store.Global.isLoading && !store.User.currentUser.apiKey) {
-        handleError(true)
+    watch(
+      () => store.User.currentUser,
+      () => {
+        if (!store.Global.isLoading && !store.User.currentUser.apiKey) {
+          handleError(true)
+        }
       }
-    })
+    )
 
-    function handleError (error) {
+    function handleError(error) {
       state.isLoading = false
       console.log(error)
       state.hasError = !!error
     }
 
-    async function handleGenerateApiKey () {
+    async function handleGenerateApiKey() {
       try {
         state.isLoading = true
         const { data } = await services.users.generateApiKey()
@@ -134,7 +137,7 @@ export default {
       }
     }
 
-    async function handleCopy () {
+    async function handleCopy() {
       toast.clear()
       try {
         await navigator.clipboar.writeText(store.User.currentUser.apiKey)
@@ -152,6 +155,5 @@ export default {
       handleCopy
     }
   }
-
 }
 </script>
