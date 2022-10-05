@@ -33,8 +33,7 @@ import { setMessage } from '@/store'
 import useStore from '@/hooks/store'
 import useNavigation from '@/hooks/navigation'
 import Icon from '@/components/Icon/index.vue'
-
-// import services from '@/services'
+import services from '@/services'
 
 type State = {
   feedback: string
@@ -76,26 +75,25 @@ export default defineComponent({
       state.isLoading = true
       setMessage(state.feedback)
       try {
-        // const response = await services.feedbacks.create({
-        //   type: store.feedbackType,
-        //   text: store.message,
-        //   page: store.currentPage,
-        //   apikey: store.apiKey,
-        //   device: window.navigator.userAgent,
-        //   fingerprint: store.fingerprint
-        // })
+        const response = await services.feedbacks.create({
+          type: store.feedbackType,
+          text: store.message,
+          page: store.currentPage,
+          apiKey: store.apiKey,
+          device: window.navigator.userAgent,
+          fingerprint: store.fingerprint
+        })
 
-        // if (!response.error) {
-        //   setSuccessState()
-        // } else {
-        //   setErrorState()
-        // }
+        if (!response.errors) {
+          setSuccessState()
+        } else {
+          setErrorState()
+        }
 
-        console.log(store)
         setSuccessState()
 
         state.isLoading = false
-      } catch (error) {
+      } catch (error: any) {
         handleError(error)
       }
     }

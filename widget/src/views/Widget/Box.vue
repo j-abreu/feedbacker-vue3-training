@@ -79,7 +79,6 @@ export default defineComponent({
     })
 
     function handleGoBack(): void {
-      console.log('here')
       setCurrentComponent('SelectFeedbackType')
     }
 

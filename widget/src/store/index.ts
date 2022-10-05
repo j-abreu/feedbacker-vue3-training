@@ -49,9 +49,9 @@ export function resetStore(): void {
   setCurrentComponent(initialState.currentComponent)
   setFeedbackType(initialState.feedbackType)
   setMessage(initialState.message)
-  setCurrentPage(initialState.currentPage)
-  setApiKey(initialState.apiKey)
   setFingerprint(initialState.fingerprint)
+  setApiKey(initialState.apiKey)
+  setCurrentPage(initialState.currentPage)
 }
 
 export default readonly(state)
