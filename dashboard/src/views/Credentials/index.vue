@@ -140,7 +140,7 @@ export default {
     async function handleCopy() {
       toast.clear()
       try {
-        await navigator.clipboar.writeText(store.User.currentUser.apiKey)
+        await navigator.clipboard.writeText(store.User.currentUser.apiKey)
         toast.success('Copied!')
       } catch (error) {
         handleError(error)
