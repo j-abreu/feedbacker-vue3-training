@@ -19,7 +19,7 @@
         <img class="w-full" src="@/assets/images/lamp.png" alt="Issue" />
       </div>
 
-      <p class="font-medium mt-1 text-gray-800">Issue</p>
+      <p class="font-medium mt-1 text-gray-800">Idea</p>
     </button>
 
     <button
